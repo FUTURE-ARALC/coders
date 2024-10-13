@@ -1,0 +1,67 @@
+version: '3'
+
+services:
+  php:
+    container_name: hyperf-coders
+    tty: true
+    image: hyperf-coders
+    build: 
+      args:
+          user: marcosmoraes
+          uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    ports:
+      - 9501:9501
+      - 9502:9502
+    # entrypoint: "php bin/hyperf.php start"
+    environment:
+      - APP_ENV=dev
+      - SCAN_CACHEABLE=false
+
+  db:
+    container_name: hyperf-db
+    image: mysql:8.1
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql.coders.dev:/var/lib/mysql
+
+  redis:
+    container_name: hyperf-redis
+    image: redis
+    restart: always
+    command: redis-server --save 20 1 --loglevel warning --requirepass senha123
+    ports:
+      - '6379:6379'
+    volumes:
+      - mysql.coders.dev:/data/cache
+
+  grafana:
+    image: grafana/grafana
+    container_name: hyperf-grafana
+    ports:
+      - '3000:3000'
+
+  prometheus:
+    image: prom/prometheus
+    container_name: hyperf-prometheus
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+networks:
+  default:
+    name: hyperf-coders
+
+volumes:
+  mysql.coders.dev:
+    driver: local
