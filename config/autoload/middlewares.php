@@ -1,6 +1,9 @@
 <?php
 
 declare(strict_types=1);
+
+use App\Middleware\TenantMiddleware;
+
 /**
  * This file is part of Hyperf.
  *
@@ -11,6 +14,7 @@ declare(strict_types=1);
  */
 return [
     'http' => [
+        TenantMiddleware::class,
         \Hyperf\Validation\Middleware\ValidationMiddleware::class,
         \Hyperf\Metric\Middleware\MetricMiddleware::class,
     ],

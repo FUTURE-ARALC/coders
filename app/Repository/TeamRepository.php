@@ -2,7 +2,10 @@
 declare(strict_types=1);
 
 namespace App\Repository;
+
+use App\DTO\Interfaces\MassAddInterface;
 use App\Model\Team;
+
 
 class TeamRepository
 {
@@ -26,11 +29,9 @@ class TeamRepository
         return $this->repository->create($data);
     }
 
-    public function addUser(string $uuid,array $uniqueUsersIds) 
+    public function addUser(Team $team,MassAddInterface $data) 
     {
-        if($team = $this->getById($uuid)) {
-            
-        }
+        return $team->userRelations()->syncWithoutDetaching($data->prepareData()->toArray());
     }
 
     public function getUserRelations(string $uuid, string $type = 'team')

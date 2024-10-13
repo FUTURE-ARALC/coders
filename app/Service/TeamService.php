@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\DTO\TeamDto;
+use App\DTO\UserRelationsDto;
 use App\Exception\Team\RegisterNotFoundException;
 use App\Repository\TeamRepository;
 use App\Request\AbstractTeamRequest;
@@ -40,11 +41,11 @@ class TeamService
     public function addUser(string $uuid, array $usersIds)
     {
         $uniqueUsersIds = array_unique($usersIds);
-        $usersTeam =  $this->teamRepository->getUserRelations($uuid);
-        var_dump($usersTeam->userRelations->pluck('id')->toArray(), $uniqueUsersIds);
-        $dataToCreate = array_diff($uniqueUsersIds,$usersTeam->userRelations->pluck('id')->toArray());
-        var_dump($dataToCreate);
-        $this->teamRepository->addUser($uuid,$uniqueUsersIds);
+        $usersTeam = $this->teamRepository->getUserRelations($uuid);
+        $arrayDiff = array_values(array_diff($uniqueUsersIds,$usersTeam->userRelations->pluck('id')->toArray()));
+        $dataToCreate = new UserRelationsDto($usersTeam->id,$arrayDiff);
+   
+        return $this->teamRepository->addUser($usersTeam,$dataToCreate);
     }
 
     
