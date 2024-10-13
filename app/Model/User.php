@@ -10,7 +10,7 @@ use Ramsey\Uuid\Uuid;
 
 /**
  */
-class User extends Model
+class User extends AbstractModel
 {
     /**
      * The table associated with the model.
@@ -27,8 +27,8 @@ class User extends Model
      */
     protected array $casts = [];
 
-    public function creating(Creating $event)
-    {
-        $this->uuid = Uuid::uuid4()->toString();
-    }
+    // public function creating(Creating $event)
+    // {
+    //     $this->uuid = Uuid::uuid4()->toString();
+    // }
 }

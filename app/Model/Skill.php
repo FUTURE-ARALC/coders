@@ -10,7 +10,7 @@ use Ramsey\Uuid\Uuid;
 
 /**
  */
-class Skill extends Model
+class Skill extends AbstractModel
 {
     /**
      * The table associated with the model.
@@ -27,8 +27,5 @@ class Skill extends Model
      */
     protected array $casts = [];
 
-    public function creating(Creating $event)
-    {
-        $this->uuid = Uuid::uuid4()->toString();
-    }
+    
 }

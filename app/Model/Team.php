@@ -13,7 +13,7 @@ use Ramsey\Uuid\Uuid;
 
 /**
  */
-class Team extends Model
+class Team extends AbstractModel
 {
     /**
      * The table associated with the model.
@@ -35,11 +35,6 @@ class Team extends Model
      * The attributes that should be cast to native types.
      */
     protected array $casts = [];
-
-    public function creating(Creating $event)
-    {
-        $this->uuid = Uuid::uuid4()->toString();
-    }
 
     public function created(Created $event)
     {

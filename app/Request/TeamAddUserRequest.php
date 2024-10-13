@@ -23,8 +23,7 @@ class TeamAddUserRequest extends FormRequest
     {
         return [
             'users' => 'required|array', 
-            'users.*' => 'integer',      
-
+            'users.*' => 'integer|exists:users,id',      
         ];
     }
 
