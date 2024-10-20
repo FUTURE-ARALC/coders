@@ -39,6 +39,8 @@ class TeamController
 
     public function show(string $uuid): HttpResponseInterface
     {
+        $counter = $this->metricFactory->makeCounter('show_team',['team']);
+        $counter->with('show')->add(1);
         return (new TeamResource($this->teamService->getTeamById($uuid)))->toResponse();
     }
 
@@ -50,8 +52,10 @@ class TeamController
         return $this->teamService->addUser($uuid,$request->getUsers());
     }
 
-    public function delete(string $uuid,ResponseInterface $response) : HttpResponseInterface
+    public function delete(string $uuid) : HttpResponseInterface
     {
+        $counter = $this->metricFactory->makeCounter('delete_user_team',['team']);
+        $counter->with('delete')->add(1);
         return (new TeamResource($this->teamService->deleteTeamById($uuid)))->toResponse();
     }
 }
