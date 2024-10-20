@@ -9,6 +9,11 @@ ENV TIMEZONE=${timezone:-"America/Sao_Paulo"} \
     APP_ENV=prod \
     SCAN_CACHEABLE=(true)
 
+# RUN apk update && apk add --no-cache zip unzip curl openssh-client wget git
+RUN apk add --upgrade php83-phpdbg php83-mbstring php83-xml
+
+
+
 RUN set -ex \
     # show php version and extensions
     && php -v \

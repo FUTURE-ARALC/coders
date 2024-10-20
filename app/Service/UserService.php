@@ -3,17 +3,15 @@
 namespace App\Service;
 
 use App\Exception\Team\RegisterNotFoundException;
+use App\Model\User;
 use App\Repository\UserRepository;
-use function Hyperf\Support\value;
+
 
 class UserService
 {
-    public function __construct(private UserRepository $userRepository)
-    {
+    public function __construct(private UserRepository $userRepository) {}
 
-    }
-
-    public function getUsers()
+    public function getUsers(): User
     {
         return $this->userRepository->get();
     }

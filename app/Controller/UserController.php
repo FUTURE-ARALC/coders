@@ -8,22 +8,20 @@ use App\DTO\UserDto;
 use App\Request\StoreUserRequest;
 use App\Resource\User as UserResource;
 use App\Service\UserService;
-use Hyperf\HttpServer\Contract\RequestInterface;
-use Hyperf\HttpServer\Contract\ResponseInterface;
+use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
+
 
 class UserController
 {
-    public function __construct(private UserService $userService)
-    {
-        
-    }
+    public function __construct(private UserService $userService) {}
 
-    public function index(RequestInterface $request, ResponseInterface $response)
+    public function index(): HttpResponseInterface
     {
         return (new UserResource($this->userService->getUsers()))->toResponse();
     }
 
-    public function store(StoreUserRequest $request) 
+    public function store(StoreUserRequest $request) : HttpResponseInterface
     {
         $data = (new UserDto($request->getName(),1,1));
         $user = $this->userService->createUser($data->toArray());
@@ -31,7 +29,7 @@ class UserController
 
     }
 
-    public function show(string $uuid)
+    public function show(string $uuid) : HttpResponseInterface
     {
         return (new UserResource($this->userService->getUserByUuid($uuid)))->toResponse();
     }

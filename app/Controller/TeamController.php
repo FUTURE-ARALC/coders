@@ -9,9 +9,9 @@ use App\Request\StoreTeamRequest;
 use App\Request\TeamAddUserRequest;
 use App\Service\TeamService;
 use App\Resource\Team as TeamResource;
-use Hyperf\HttpServer\Contract\ResponseInterface;
 use Hyperf\Metric\Adapter\Prometheus\MetricFactory;
-use Psr\Http\Message\ResponseInterface as Psr7ResponseInterface;
+use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
+
 
 
 class TeamController
@@ -21,21 +21,23 @@ class TeamController
         public MetricFactory $metricFactory
     ) {}
 
-    public function index()
+    public function index(): HttpResponseInterface
     {
         $counter = $this->metricFactory->makeCounter('list_team',['team']);
         $counter->with('index')->add(1);
         return (new TeamResource($this->teamService->getTeams()))->toResponse();
     }
 
-    public function store(StoreTeamRequest $request)
+    public function store(StoreTeamRequest $request):HttpResponseInterface
     {
+        $counter = $this->metricFactory->makeCounter('store_team',['team']);
+        $counter->with('store')->add(1);
         $data = (new TeamDto($request->getName(),$request->getType()))->toArray();
         $team = $this->teamService->createTeam($data);
-        return (new TeamResource($team))->toResponse();
+        return (new TeamResource($team))->toResponse()->withStatus(200);
     }
 
-    public function show(string $uuid)
+    public function show(string $uuid): HttpResponseInterface
     {
         return (new TeamResource($this->teamService->getTeamById($uuid)))->toResponse();
     }
@@ -48,7 +50,7 @@ class TeamController
         return $this->teamService->addUser($uuid,$request->getUsers());
     }
 
-    public function delete(string $uuid,ResponseInterface $response) : Psr7ResponseInterface
+    public function delete(string $uuid,ResponseInterface $response) : HttpResponseInterface
     {
         return (new TeamResource($this->teamService->deleteTeamById($uuid)))->toResponse();
     }

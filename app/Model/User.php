@@ -4,12 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model;
 
-use Hyperf\Database\Model\Events\Creating;
-use Hyperf\DbConnection\Model\Model;
-use Ramsey\Uuid\Uuid;
-
-/**
- */
 class User extends AbstractModel
 {
     /**
