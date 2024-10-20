@@ -31,13 +31,13 @@ Router::get('/health', function (ResponseInterface $response) {
         ->withHeader('Content-Type', 'text/plain');
 });
 
-Router::get('/metrics_new', function(CollectorRegistry $registry){
+// Router::get('/metrics_new', function(CollectorRegistry $registry){
     
-    $renderer = new Prometheus\RenderTextFormat();
-    return $renderer->render($registry->getMetricFamilySamples());
+//     $renderer = new Prometheus\RenderTextFormat();
+//     return $renderer->render($registry->getMetricFamilySamples());
 
     
-});
+// });
 
 
 
