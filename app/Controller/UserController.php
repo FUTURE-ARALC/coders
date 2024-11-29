@@ -18,13 +18,14 @@ class UserController
 
     public function index(): HttpResponseInterface
     {
-        return (new UserResource($this->userService->getUsers()))->toResponse();
+        return UserResource::collection($this->userService->getUsers())->toResponse();
+
     }
 
     public function store(StoreUserRequest $request) : HttpResponseInterface
     {
-        $data = (new UserDto($request->getName(),1,1));
-        $user = $this->userService->createUser($data->toArray());
+        $userCreate = UserDto::fromRequest($request);
+        $user = $this->userService->createUser($userCreate->toArray());
         return (new UserResource($user))->toResponse();
 
     }

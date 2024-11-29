@@ -25,11 +25,24 @@ class StoreUserRequest extends FormRequest
     {
             return [
                 'name' => 'required|string',
+                'email' => 'required|string',
+                'password' => 'required|string'
             ];
     }
 
     public function getName()
     {
         return $this->input('name');
+    }
+
+    public function getEmail()
+    {
+        return $this->input('email');
+    }
+
+    public function getPassword()
+    {
+        return $this->input('password');
+
     }
 }

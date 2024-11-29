@@ -14,7 +14,7 @@ class User extends AbstractModel
     /**
      * The attributes that are mass assignable.
      */
-    protected array $fillable = ['name','action','tenant_id','uuid'];
+    protected array $fillable = ['name','action','tenant_id','uuid','email','password'];
 
     /**
      * The attributes that should be cast to native types.

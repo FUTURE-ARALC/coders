@@ -21,6 +21,11 @@ class UserRepository
         return $this->repository->where('uuid',$uuid)->first();
     }
 
+    public function getByEmail(string $email)
+    {
+        return $this->repository->where('email',$email)->first();
+    }
+
     public function create(array $data)
     {
         return $this->repository->create($data);

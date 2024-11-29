@@ -14,6 +14,7 @@ use App\Middleware\TenantMiddleware;
  */
 return [
     'http' => [
+        App\Middleware\CorsMiddleware::class,
         TenantMiddleware::class,
         \Hyperf\Validation\Middleware\ValidationMiddleware::class,
         \Hyperf\Metric\Middleware\MetricMiddleware::class,
