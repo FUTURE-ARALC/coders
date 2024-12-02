@@ -56,6 +56,10 @@ Router::get('/metrics', function(ResponseInterface $response){
 
 });
 
+Router::addGroup('/login', function(){
+    Router::post('/', 'App\Controller\AuthController@login');
+});
+
 
 
 Router::addGroup('/team', function (){

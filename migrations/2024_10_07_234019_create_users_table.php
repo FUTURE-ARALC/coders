@@ -16,6 +16,8 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('tenant_id')->nullable(false);
             $table->uuid('uuid');
             $table->text('name')->nullable(false);
+            $table->string('email')->unique(); // Email único, usando string
+            $table->text('password')->nullable(false);
             $table->boolean('active')->default(true)->nullable(false);
             $table->datetimes();
             $table->softDeletes();

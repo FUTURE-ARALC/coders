@@ -3,15 +3,16 @@
 namespace App\Service;
 
 use App\Exception\Team\RegisterNotFoundException;
-use App\Model\User;
 use App\Repository\UserRepository;
+use Hyperf\Contract\PaginatorInterface;
+
 
 
 class UserService
 {
     public function __construct(private UserRepository $userRepository) {}
 
-    public function getUsers(): User
+    public function getUsers(): PaginatorInterface
     {
         return $this->userRepository->get();
     }

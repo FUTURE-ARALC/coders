@@ -13,6 +13,11 @@ class User extends JsonResource
      */
     public function toArray(): array
     {
-        return parent::toArray();
+
+        return [
+            'name' => $this->name, // Substitua por atributos reais do seu modelo
+
+        ];
+        
     }
 }
